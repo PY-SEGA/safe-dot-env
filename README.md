@@ -1,6 +1,6 @@
 # PY-SEGA
 
-## Conflict Plan
+## **Conflict Plan**
 ###	What will be your group’s process to resolve conflict, when it arises?
 > - Our group will meet online and talk about it, we will respect each other’s opinions and only talk in a respectable manner.
 
@@ -20,6 +20,7 @@
 
 ------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------
+## **Communication Plan**
 
 ###	What hours will you be available to communicate?
 > - We agreed on 9am to 5pm work time from Sunday to Wednesday.
