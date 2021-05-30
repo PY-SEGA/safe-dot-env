@@ -66,6 +66,21 @@
 - after every feature 
 #### How will you communicate that it’s time to merge?
 - when we have to work on other feature 
+
+------------------------------------------------------------------------------------------------
+
+## **Cooperation Plan**
+### What are the key strengths of each person on the team?
+- Manar: flexable , can help others in my free time and accept project changes.
+- Rawan: quick learning ability , ability to process information and make connections on the fly and find different resources for the team.
+- Mohammad Momani: Curiosity, able to pick up any Library and start using it with minimal ramp up time.
+- Mohammad Ashour: Critical thinking and Puzzle-solver
+
+### In which professional competencies do you each want to develop greater strength?
+- learn about other technologies needed in building a complete product, learn how to write code better and understand concepts such as design patterns and object-oriented programming.
+
+### Knowing that every person in your team needs to understand all aspects of the project, how do you plan to approach the day-to-day work?
+- We will have a daily meetings, these meetings allow the team to review the previous day’s work, discuss the current day’s tasks, and each person explains the progress made and quickly explains the code written for the rest of the members of the group .
  
 -----------------
 ## Work Plan
