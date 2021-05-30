@@ -1,5 +1,13 @@
 # PY-SEGA
+## Group Name :-
 
+- **Mohammad Momani**
+- **Manar Abdelkarim**
+- **Mohammad Ashour**
+- **Rawan Abu-Yasein**
+
+
+------------------------------------------------------------------------------------------------
 ## **Conflict Plan**
 ###	What will be your group’s process to resolve conflict, when it arises?
 - Our group will meet online and talk about it, we will respect each other’s opinions and only talk in a respectable manner.
@@ -18,7 +26,7 @@
 - We can discuss the different opinions and thoughts and share them with all of the group members and then take a vote on what to do next.
 - When we fail to find a common solution together and the votes are equal and the problem is critical to the workflow we will let our instructor/TA help us with it.
 
-------------------------------------------------------------------------------------------------
+
 ------------------------------------------------------------------------------------------------
 ## **Communication Plan**
 
