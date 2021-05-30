@@ -47,3 +47,25 @@
 
 ### How will you ensure that you are creating a safe environment where everyone feels comfortable speaking up?
 - When anyone speaks up about anything we will always listen and not interrupt also we will never make fun of them. We will be nice to each other and always communicate in a respectable manner
+
+
+------------------
+## Git Process
+### What components of your project will live on GitHub?
+- All of our project
+### How will you share the repository with your teammates?
+- we are all owners on the rebo  
+### What is your Git flow?
+- every feature will have its own branch and the team leader will merge the pull request  
+### Will you be using a PR review workflow? If so, consider:
+#### How many people must review a PR? 
+- 1 
+#### Who merges PRs? 
+- team leader 
+#### How often will you merge? 
+- after every feature 
+#### How will you communicate that it’s time to merge?
+- when we have to work on other feature 
+ 
+
+ 
