@@ -67,5 +67,13 @@
 #### How will you communicate that it’s time to merge?
 - when we have to work on other feature 
  
+-----------------
+## Work Plan
 
+
+### How you will identify tasks, assign tasks, know when they are complete, and manage work in general?
+- using Trello we will create tasks and give each task deadline  
+
+### What project management tool will be used?
+- Trello : [trello](https://trello.com/b/1BWEA7Lz/project4011)
  
