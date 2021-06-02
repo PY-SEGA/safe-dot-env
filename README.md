@@ -127,6 +127,9 @@
 - As a user I want to get reliable and accurate about the video
 - As a user I want to get the insights about the video content -> `Stretch Goal`
 - As a user I want to read the subtitle of the video in my native languge -> `Stretch Goal`
+-
+------------------------------------------------------------------------------------------------
+## wireframe 
 
 ![](Page_2.png)
 ![](Page_2_Copy.png)
