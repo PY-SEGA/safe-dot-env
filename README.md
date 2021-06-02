@@ -118,4 +118,17 @@
 ### What project management tool will be used?
 
 > - Trello : [trello](https://trello.com/b/1BWEA7Lz/project4011)
+
+------------------------------------------------------------------------------------------------
+User Stories
+
+- As a user I want to be able to use youtube video link 
+- As a user I want to know if the video suitable to watch 
+- As a user I want to get reliable and accurate about the video
+- 
+
+
+- As a user I want to get the insights about the video content -> `Stretch Goal`
+- As a user I want to read the subtitle of the video in my native languge -> `Stretch Goal`
+
  
