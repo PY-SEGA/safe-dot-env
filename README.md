@@ -45,16 +45,16 @@
 
 ### How often will you take breaks?
 
-> - we will take break when needed
+> - we will have a break in the original break time on work days (12:00pm)
 ### What is your plan if you start to fall behind?
 
-> - we will extend work hours 
+> - we will extend work hours and ask for aasistence 
 ### How will you communicate after hours and on the weekend?
 
-> - any time ,we will use slack as our main communicate platform 
+> - any time ,we will use slack as our main communicate platform and we will meet at zoom at 7pm
 ### What is your strategy for ensuring everyone's voices are heard?
 
-> - We welcome all the different opinions and we don’t judge anyone, we are all here because we like doing the same thing which is web development. We support each other not just to finish the goal of this project but also because we are friends.
+> - We welcome all the different opinions and we don’t judge anyone, we are all here because we like doing the same thing which is web development. We support each other not just to finish the goal of this project but also because we are friends. We will make sure to hear everyone opinion and encourage the members to participate
 
 ### How will you ensure that you are creating a safe environment where everyone feels comfortable speaking up?
 
