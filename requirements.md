@@ -43,7 +43,7 @@ The web app will download videos and indicates if the videos have inappropreate 
 * The user will add a link for the video they want to download.
 * The users can pick the quality for the videos being downloaded.
 * The user will be warned about inappropreate content.
-* 
+
 ### Data Flow
 
 The user will add the link of the video they want to download, then the video will start downloading to their local storage, after downloading, the web app will check for the spoken language if it is appropreate to the user, and will warn if other than that.
