@@ -61,7 +61,7 @@ The user will add the link of the video they want to download, then the video wi
 
 ## Domain Modeling
 
-![Domain_modeling](https://github.com/PY-SEGA/PY-SEGA/blob/main/Domain_modeling.jpg)
+![Domain_modeling](assets/domain_modeling.jpg)
 
 
 
