@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "safe-dot-env"
+version = "0.1.0"
+description = ""
+authors = ["m7madmomani2 <mohammad.momani1996.kk@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pytube = "^10.8.4"
+SpeechRecognition = "^3.8.1"
+moviepy = "^1.0.3"
+profanity-check = "^1.0.3"
+pydub = "^0.25.1"
+joblib = "^1.0.1"
+sklearn = "^0.0"
+numpy = "^1.20.3"
+better-profanity = "^0.7.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
