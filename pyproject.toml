@@ -15,6 +15,7 @@ joblib = "^1.0.1"
 sklearn = "^0.0"
 numpy = "^1.20.3"
 better-profanity = "^0.7.0"
+ttkthemes = "^3.2.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

@@ -340,6 +340,17 @@ notebook = ["ipywidgets (>=6)"]
 telegram = ["requests"]
 
 [[package]]
+name = "ttkthemes"
+version = "3.2.2"
+description = "A group of themes for the ttk extensions of Tkinter with a Tkinter.Tk wrapper"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+pillow = "*"
+
+[[package]]
 name = "urllib3"
 version = "1.26.5"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -363,7 +374,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "f0c65988202d9d7c9ebb644ce4d3881720f3b856f64e993108b96b7059bd83be"
+content-hash = "905091c4ea0a046c87c797d9a4da0ff7611870243093613806c8e774a7dca1a4"
 
 [metadata.files]
 atomicwrites = [
@@ -590,6 +601,9 @@ threadpoolctl = [
 tqdm = [
     {file = "tqdm-4.61.0-py2.py3-none-any.whl", hash = "sha256:736524215c690621b06fc89d0310a49822d75e599fcd0feb7cc742b98d692493"},
     {file = "tqdm-4.61.0.tar.gz", hash = "sha256:cd5791b5d7c3f2f1819efc81d36eb719a38e0906a7380365c556779f585ea042"},
+]
+ttkthemes = [
+    {file = "ttkthemes-3.2.2.tar.gz", hash = "sha256:01daed001f2ff0e4f32832a0d9ea48176c0c505203b030756bdde3bd1bcb21d2"},
 ]
 urllib3 = [
     {file = "urllib3-1.26.5-py2.py3-none-any.whl", hash = "sha256:753a0374df26658f99d826cfe40394a686d05985786d946fbe4165b5148f5a7c"},
