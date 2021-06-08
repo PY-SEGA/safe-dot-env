@@ -69,11 +69,14 @@ def comments_test(comments_list):
 # subtitle_list
 def text_classifier(text_test):
     text_predict=[]
-    bad_words=[]
-    for line in text_test:
-        text_predict.append(predict([line])[0])
-        bad_words.append(bad_word_counter(line))
-    text_predict=sum(text_predict)/len(text_predict)
+    bad_words=[0]
+    if len(text_test): 
+        for line in text_test:
+            text_predict.append(predict([line])[0])
+            bad_words.append(bad_word_counter(line))
+        text_predict=sum(text_predict)/len(text_predict)
+    else:
+        text_predict = 0
     return {"text_predict":text_predict,"bad_words":sum(bad_words)}
 
 

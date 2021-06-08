@@ -22,6 +22,7 @@ def download_method(ob):
     print("start download")
     try:
         print("***************try*************************")
+        
         caption = myVideo.captions.get_by_language_code('en')
         print("Video English Subtitle ")
         all = str(caption.generate_srt_captions())
@@ -40,8 +41,7 @@ def download_method(ob):
         title = re.sub(r'^A-z0-9]', '_', myVideo.title)
         print(title)
         print("\nStart download!!!")
-        myVideo.streams.filter(res=ob['resolution']).first().download(
-            filename=title, output_path="downloads")
+        myVideo.streams.filter(res=ob['resolution']).first().download(filename=title, output_path="downloads")
         print("download Done!!!")
         print(f"downloads/{myVideo.title}")
         clip = mp.VideoFileClip(fr"downloads/{title}.mp4")
@@ -54,11 +54,10 @@ def download_method(ob):
     except:
         print("*************** except *************************")
         title = re.sub(
-                r'[^A-z0-9|\s]', '_', myVideo.title)
+                r'[^A-z0-9]', '_', myVideo.title)
         print(title)
         print("\nStart download!!!")
-        myVideo.streams.filter(res=ob['resolution']).first().download(
-            filename=title, output_path="downloads")
+        myVideo.streams.filter(res=ob['resolution']).first().download(filename=title, output_path="downloads")
         print("download Done!!!")
         print(f"downloads/{myVideo.title}")
         clip = mp.VideoFileClip(fr"downloads/{title}.mp4")
@@ -90,10 +89,10 @@ def search(gui_url):
     items = c.fetchall()
     print("here is the items",items)
     
+    myVideo = YouTube(url)
     
     if len(items) == 0:
         print(items)
-        myVideo = YouTube(url)
         print("********************** Title **********************\n")
         print("Video Title: ", myVideo.title)
         print("********************** Thumbnail image **********************\n")
@@ -115,11 +114,18 @@ def search(gui_url):
         for stream in myVideo.streams.filter(progressive=True):
             res.append(stream.resolution)
 
-
-        con.commit()
+        insert_into = """INSERT INTO videos("url","title", "Thumbnail_image","author","description","rating","views" ,"good_comments","bad_comments", "profanity_comments" ,"path","subtitle","vid_text_predict"  ,"vid_bad_words" ,"resolution")         VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"""        
+        tuple_of_details = (list_of_details)        
+        c.execute(insert_into,tuple_of_details)        
+        c.execute("select * from videos where url=?",(url,))        
+        items = c.fetchall()        
+        print("here is the items" , items)        
+        con.commit()        
         con.close()
-        sub_extract(url, res)
-        return {"url" : url , "resolution" : res[0] }
+
+
+        # sub_extract(url, res)
+        return {"url" : url , "resolution" : res, "my_video": myVideo}
     else:
         print("hi I am here finally")
         print(items)
@@ -142,7 +148,7 @@ def search(gui_url):
              "resolution" : items[0][14]
         }
         print("from dic_items" , dic_items)
-        return {"url" : dic_items['url'] , "resolution" : dic_items['resolution'] }
+        return {"url" : dic_items['url'] , "resolution" : dic_items['resolution'], "my_video": myVideo }
 
 
 def sub_extract(url_input, resolution):
@@ -151,21 +157,21 @@ def sub_extract(url_input, resolution):
     con = sqlite3.connect('video_details.db')
     c = con.cursor()
     url = url_input
+    myVideo = YouTube(url)
 
     c.execute("select * from videos where url=?",(url,))
     items = c.fetchall()
 
 
-    vid = search(url)
     res = resolution
-    title = re.sub(r'[W|\s|?|#|:|!|@|#|$|\'|%|^|&|*|+|=|\|/|*]', '_', vid['my_video'].title)
+    title = re.sub(r'[^A-z0-9]', '_', myVideo.title)
     
-    subtitle_list = download_method({"url" : url , "resolution" : res[0] })
+    subtitle_list = download_method({"url" : url , "resolution" : res })
     classifier_result_vid = text_classifier(subtitle_list)
 
 
-    res_string = ','.join(res)
-    list_of_details = list_of_details + [classifier_result_vid['text_predict'],classifier_result_vid['bad_words'],res_string]
+    # res_string = ','.join(res)
+    list_of_details = list_of_details + [classifier_result_vid['text_predict'],classifier_result_vid['bad_words'],res]
 
     print(f"percentage of profanity {classifier_result_vid['text_predict']}")
     print(f"number of bad words {classifier_result_vid['bad_words']}")
@@ -190,6 +196,50 @@ def sub_extract(url_input, resolution):
     #     pop_up_unsafe(title)
     # else:
     #     pop_up_safe()
+    insert_into = """INSERT INTO videos("url","title", "Thumbnail_image","author","description","rating","views" ,"good_comments","bad_comments", "profanity_comments" ,"path","subtitle","vid_text_predict"  ,"vid_bad_words" ,"resolution")         VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"""        
+    tuple_of_details = (list_of_details)        
+    c.execute(insert_into,tuple_of_details)        
+    c.execute("select * from videos where url=?",(url,))        
+    items = c.fetchall()        
+    print("here is the items" , items)        
+    con.commit()        
+    con.close()
+
 
     return {'profanity': classifier_result_vid['text_predict'], 'bad':classifier_result_vid['bad_words'], 'good_comments':f'{float(good_result)*100}%', 'bad_comments':f'{float(bad_result)*100}%', 'profanity_comments':classifier_result['text_predict'], 'bad_word_comments':classifier_result['bad_words'] }
 
+def call_res(url , res):
+    con = sqlite3.connect('video_details.db')
+    c = con.cursor()
+    c.execute("select * from videos where url=?",(url,))
+    items = c.fetchall()
+    print("here is the items\n***************************************************************",len(items))
+
+
+    if len(items):
+        print(":inside ")
+        sub_extract(url, res)
+    else:
+        print("hi I am here finally")
+        print(items)
+        dic_items = {
+            "url" : items[0][0],
+            "title": items[0][1],
+             "Thumbnail_image": items[0][2],
+             "author": items[0][3],
+             "description": items[0][4],
+             "rating": items[0][5],
+             "views" : items[0][6],
+             "good_comments": items[0][7],
+             "bad_comments": items[0][8],
+             "profanity_comments" : items[0][9],
+             "path": items[0][10],
+             "subtitle": items[0][11],
+             "vid_text_predict" : items[0][12] ,
+             "vid_bad_words" : items[0][13],
+             "resolution" : items[0][14]
+        }
+        good_result = format(dic_items['good_comments'], ".2f")
+        bad_result = format(dic_items['bad_comments'], ".2f")
+        print(dic_items)
+        return {'profanity': dic_items['vid_text_predict'], 'bad':dic_items['vid_bad_words'], 'good_comments':f'{float(good_result)*100}%', 'bad_comments':f'{float(bad_result)*100}%', 'profanity_comments':dic_items['profanity_comments'], 'bad_word_comments':dic_items['bad_comments'] }
