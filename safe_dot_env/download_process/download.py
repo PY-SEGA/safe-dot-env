@@ -1,4 +1,3 @@
-
 from pickle import GLOBAL
 from pytube import YouTube
 import moviepy.editor as mp
@@ -19,9 +18,7 @@ def download_method(ob):
     global list_of_details
     url = ob['url']
     myVideo = YouTube(url)
-    # download video
-    # for stream in myVideo.streams.filter(progressive=True, file_extension='mp4').order_by('resolution'):
-    #     print(stream.resolution)
+
     print("start download")
     try:
         print("***************try*************************")
