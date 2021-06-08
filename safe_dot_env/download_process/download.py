@@ -114,14 +114,6 @@ def search(gui_url):
         for stream in myVideo.streams.filter(progressive=True):
             res.append(stream.resolution)
 
-        insert_into = """INSERT INTO videos("url","title", "Thumbnail_image","author","description","rating","views" ,"good_comments","bad_comments", "profanity_comments" ,"path","subtitle","vid_text_predict"  ,"vid_bad_words" ,"resolution")         VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"""        
-        tuple_of_details = (list_of_details)        
-        c.execute(insert_into,tuple_of_details)        
-        c.execute("select * from videos where url=?",(url,))        
-        items = c.fetchall()        
-        print("here is the items" , items)        
-        con.commit()        
-        con.close()
 
 
         # sub_extract(url, res)
@@ -152,6 +144,18 @@ def search(gui_url):
 
 
 def sub_extract(url_input, resolution):
+
+
+    """good_comments text,
+    bad_comments text, 
+    profanity_comments real,
+    path text,
+    subtitle text,
+    vid_text_predict real ,
+    vid_bad_words integer,
+    resolution text
+    )
+    """
     global list_of_details
 
     con = sqlite3.connect('video_details.db')
@@ -201,11 +205,12 @@ def sub_extract(url_input, resolution):
     c.execute(insert_into,tuple_of_details)        
     c.execute("select * from videos where url=?",(url,))        
     items = c.fetchall()        
-    print("here is the items" , items)        
+    print("here is the items" , items)    
+
     con.commit()        
     con.close()
 
-
+    print(classifier_result_vid)
     return {'profanity': classifier_result_vid['text_predict'], 'bad':classifier_result_vid['bad_words'], 'good_comments':f'{float(good_result)*100}%', 'bad_comments':f'{float(bad_result)*100}%', 'profanity_comments':classifier_result['text_predict'], 'bad_word_comments':classifier_result['bad_words'] }
 
 def call_res(url , res):
@@ -216,7 +221,7 @@ def call_res(url , res):
     print("here is the items\n***************************************************************",len(items))
 
 
-    if len(items):
+    if len(items)==0:
         print(":inside ")
         sub_extract(url, res)
     else:
@@ -239,7 +244,5 @@ def call_res(url , res):
              "vid_bad_words" : items[0][13],
              "resolution" : items[0][14]
         }
-        good_result = format(dic_items['good_comments'], ".2f")
-        bad_result = format(dic_items['bad_comments'], ".2f")
         print(dic_items)
-        return {'profanity': dic_items['vid_text_predict'], 'bad':dic_items['vid_bad_words'], 'good_comments':f'{float(good_result)*100}%', 'bad_comments':f'{float(bad_result)*100}%', 'profanity_comments':dic_items['profanity_comments'], 'bad_word_comments':dic_items['bad_comments'] }
+        return {'profanity': dic_items['vid_text_predict'], 'bad':dic_items['vid_bad_words'], 'good_comments':dic_items['good_comments'], 'bad_comments':dic_items['bad_comments'], 'profanity_comments':dic_items['profanity_comments'], 'bad_word_comments':dic_items['bad_comments'] }
