@@ -122,11 +122,11 @@
 ------------------------------------------------------------------------------------------------
 ## User Stories
 
-- As a user I want to be able to use youtube video link 
-- As a user I want to know if the video suitable to watch 
+- As a user I want to copy YoeTube video link so i can use to download the video  
+- As a user, I want to see if the video suitable to watch or not by seeing the percentage of good - bad words 
 - As a user I want to get reliable and accurate about the video
 - As a user I want to get the insights about the video content -> `Stretch Goal`
-- As a user I want to read the subtitle of the video in my native languge -> `Stretch Goal`
+- As a user I want to read the subtitle of the video in my native language -> `Stretch Goal`
 ------------------------------------------------------------------------------------------------
 ## wireframe 
 
