@@ -9,41 +9,12 @@ from PIL import ImageTk,Image
 import threading
 import requests
 from io import BytesIO
-# class App(tk.Frame):
-#     def __init__(self, master=None):
-#         super().__init__(master)
-#         # self.pack()
-    
-# my_app = App()
-
-# def print_result(url):
-#     '''this function is to test the button and print the input to the shell'''
-#     result = url.get() #This gets the input as a string
-#     print(result)
-
-# url = StringVar() 
-
-# label = Label(my_app.master, text='Video URL', font=("Helvetica", 18, BOLD), width=15).grid(row=0, column=0)
-
-# label_progress= Label(my_app.master)
-# label_progress.grid(row=7,column=2)
-
-# entry_url = Entry(my_app.master, textvariable=url, width=50).grid(row=0,column=1)
-
-# button_function = Button(my_app.master, text='Download',command=lambda:print_result(url), font=(20), width=20, bg='blue').grid(row=0,column=2) #This button calles the function 
-
-
-
-
-# my_app.master.title("Safe-Dot-Env")
-# my_app.master.geometry('1000x700')
-
-
-# my_app.mainloop()
-
+import textwrap
+from safe_dot_env.download_process.download import *
+from safe_dot_env.download_process.root import root
 
 # WINDOW CONFIGURATION
-root = Tk()
+# root = Tk()
 root.title("Safe-dot-env")
 root.minsize(1100, 760)
 root.configure(background="#2b2929")
@@ -133,6 +104,63 @@ def pop_up_unsafe():
     yes.pack(pady=10)
 
 
+def pop_up_safe():
+    '''This function is for the safe content warning'''
+    global pop4
+    pop4 = Toplevel(root)
+    pop4.overrideredirect(0.2)
+    pop4.title('Content safe')
+    pop4.geometry('350x250+700+500')
+    pop4.config(bg=('#2b2929'))
+    
+    
+    # global err
+    # err = PhotoImage(file='assets/error2.png')
+
+    # err_pic = Label(pop4, image=err,borderwidth=0, bg='yellow')
+    # err_pic.pack(pady=10)
+
+    pop4_label = Label(pop4, text='This video is safe',bg='#2b2929', fg='white', font=alert_font)
+    pop4_label.pack(pady=10)
+
+    k = Button(pop4, text='OK', command=pop4.destroy, bg='grey')
+    k.pack(pady=10)
+  
+    # yes = Button(pop4, text='Continue', command=pop4.destroy, bg='grey')
+    # yes.pack(pady=10)
+
+
+
+
+
+def download_complete():
+    '''This function is for the unsafe content warning'''
+    global pop3
+    pop3 = Toplevel(root)
+    pop3.overrideredirect(0.2)
+    pop3.title('Download Complete')
+    pop3.geometry('350x250+700+500')
+    pop3.config(bg=('#2b2929'))
+    
+    
+    global done
+    done = PhotoImage(file='assets/error2.png')
+
+    # done_pic = Label(pop3, image=done,borderwidth=0, bg='yellow')
+    # done_pic.pack(pady=10)
+
+    pop3_label = Label(pop3, text='Download complete',bg='#2b2929', fg='white', font=alert_font)
+    pop3_label.pack(pady=10)
+
+    # no = Button(pop3, text='Cancel', command=pop3.destroy, bg='grey')
+    # no.pack(pady=10)
+  
+    k = Button(pop3, text='OK', command=pop3.destroy, bg='grey')
+    k.pack(pady=10)
+
+
+
+
 def thread_search():
     '''This function is for the search button, either sends the url to the (search_video) function, or
     states that the url is invalid'''
@@ -151,16 +179,19 @@ def thread_search():
 def show_result_frame(root_window, *args, **kwargs):
     ''' This function adds the content of the video to the application'''
 
+
+
+
     result_frame = Frame(root_window, bg='#2b2929')
     result_frame.grid(row=3, column=0, rowspan=3, columnspan=4)
 
 
     title_frame = Frame(result_frame, borderwidth=0, highlightthickness=0)
     title_frame.configure(background="#2b2929")
-    title_frame.grid(row=3, column=0, padx=(0, 10), rowspan=4)   
+    title_frame.grid(row=3, column=0, padx=(0, 10), rowspan=4, columnspan=4)   
 
-    title = Label(title_frame, text=kwargs["title"], font=("bold", 30), bg="#2b2929", fg="white", width= 20)
-    title.grid(row=0, column=0, pady=(40, 10))
+    title = Label(title_frame, text=kwargs["title"], font=("bold", 20), bg="#2b2929", fg="white")
+    title.grid(row=0, column=0, pady=(40, 10), columnspan=10)
 
     thumb_frame = Frame(root_window, bg='#2b2929')
     thumb_frame.grid(row=6, column=0, padx=(150,0))
@@ -172,16 +203,17 @@ def show_result_frame(root_window, *args, **kwargs):
 
 
 
-    resolution_options = ['720p', '1080p', '420p'] #place holder
+    # resolution_options = ['720p', '1080p', '420p'] #place holder
     resolution_frame = Frame(root_window, bg='#2b2929')
     resolution_frame.grid(row=2,)
 
-    resolution_label = Label(resolution_frame, text="Resolution", font=('bold', 14), bg="#2b2929", fg="white")
-    resolution_label.grid(row=2, column=0, pady=8, padx=(30,30))
-
     resolution_dropdown_value = StringVar()
-    resolution_dropdown = ttk.Combobox(resolution_frame, textvariable=resolution_dropdown_value, width=33, font=('bold', 14))
-    resolution_dropdown ['value'] = [k for k in resolution_options]
+    resolution_dropdown = ttk.Combobox(result_frame, textvariable=resolution_dropdown_value, width=10, font=('bold', 14))
+
+    resolution_label = Label(resolution_frame, text="Resolution", font=('bold', 14), bg="#2b2929", fg="white")
+    resolution_label.grid(row=3, column=0, padx=(30,30), pady=(100,0))
+
+    resolution_dropdown ['value'] = [k for k in kwargs['resolution_options']]
     resolution_dropdown.grid(row=2, column=1)
 
     author_frame = Frame(root_window, bg='#2b2929')
@@ -190,9 +222,9 @@ def show_result_frame(root_window, *args, **kwargs):
     author_label.grid(row=0, column=0)
     author = Label(author_frame, text=kwargs['author'], bg='#2b2929', fg="white", font=(20)).grid(row=0, column=1)
 
-    description_label = Label(author_frame, text="Description:", bg= '#2b2929', fg='white', font=info_font, padx= 50,pady=15).grid(row=1,column=0)
-    description = Label(author_frame, text=kwargs['description'], bg='#2b2929',fg="white", font=(20))
-    description.grid(row=1, column=1)
+    # description_label = Label(author_frame, text="Description:", bg= '#2b2929', fg='white', font=info_font, padx= 50,pady=15).grid(row=1,column=0)
+    # description = Label(author_frame, text=textwrap.fill(kwargs['description'], width=30), bg='#2b2929',fg="white", font=(20))
+    # description.grid(row=1, column=1)
 
     views_label = Label(author_frame, text= "Views:", font=info_font, bg= '#2b2929', fg='white',pady=15).grid(row=2, column=0)
     views = Label(author_frame, text= kwargs['views'], font=(20), bg = '#2b2929', fg='white').grid(row=2, column=1)
@@ -201,8 +233,15 @@ def show_result_frame(root_window, *args, **kwargs):
     rating = Label(author_frame, text= kwargs['rating'], font=(20), bg = '#2b2929', fg='white').grid(row=3, column=1)
 
     download_frame = Frame(root_window, bg='#2b2929')
-    download_frame.grid(row=8, column=0, pady=(20,40), padx=(150,0))
-    download = Button(download_frame, bg='#941D12', fg = '#ffffff', text='Download', width=15, font=13).grid(row=0, column=2)
+    download_frame.grid(row=6, column=1, pady=(20,40), padx=(150,0))
+    download = Button(download_frame, bg='#941D12', fg = '#ffffff', text='Download', width=15, font=13, command= lambda: thread_download(kwargs['url_entry'], kwargs['resolution_options'])).grid(row=0, column=2)
+    
+    
+    def thread_download(url, res):
+        if resolution_dropdown.get():
+            sub_extract(url, resolution_dropdown.get())
+        else:
+            sub_extract(url, res[0])
 
 
 def search_video():
@@ -210,22 +249,20 @@ def search_video():
     ''' This function gathers the information of the video and sends them to the (show_result_frame) function'''
 
     video_url = url_entry.get()
+    vid = search(video_url)
+    resolution = vid['resolution']
     if video_url:
         # Creating the Frame from the available data to download the video
         show_result_frame(root_window=second_frame,
-                          #available_stream=res["streams"],                          
-                        #   originalStream=res["originalStream"],
-                          #thumbnail_url=res["thumbnail_url"]
-                          thumbnail_url = 'https://i.pinimg.com/originals/be/b8/5d/beb85da5406bbd3fb982a8d78d923dc7.jpg',
-                          #title=res["title"],
-                          title = 'Versus',
-                        #   video_url=video_url,
+                          thumbnail_url = vid['my_video'].thumbnail_url,
+                          resolution_options = resolution,
+                          title = vid['my_video'].title,
                           search_button=search_button,
-                          url_entry=url_entry,
-                          author = 'Author',
-                          description = 'hello, this is the description of the video\n so here you will find some\n lines that describe this video',
-                          views = 222202.0,
-                          rating = 5.6
+                          url_entry=video_url,
+                          author = vid['my_video'].author,
+                          description = vid['my_video'].description,
+                          views = vid['my_video'].views,
+                          rating = vid['my_video'].rating
                           )
 
 
