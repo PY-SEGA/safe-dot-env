@@ -14,27 +14,35 @@ def youtube_comments(url):
     DEVELOPER_KEY = myapi
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey = DEVELOPER_KEY)
-    request = youtube.commentThreads().list(
-        part="replies",
-        order="relevance",
-        videoId=id
-    )
-    response = request.execute()
-    print(json.dumps(response, indent=4))#['items'][5]["replies"]["comments"][0]["snippet"]["textOriginal"]
+    try:
+        request = youtube.commentThreads().list(
+            part="replies",
+            order="relevance",
+            maxResults=100,
+            videoId=id
+        )
+        response = request.execute()
+    except:
+         return "no comments"
+    # print(json.dumps(response, indent=4))#['items'][5]["replies"]["comments"][0]["snippet"]["textOriginal"]
     # print(response['items'])#['items'][5]["replies"]["comments"][0]["snippet"]["textOriginal"]
+    comments_list = []
+    
     for i in response['items']:
         try:
             if i["replies"]:
                 for x in i["replies"]["comments"]:
+                    comments_list.append(x["snippet"]["textDisplay"])
                     print(x["snippet"]["textDisplay"])
-                    print(x["snippet"]["textOriginal"])
+
         except:
-            continue
+           continue
+    return comments_list
 # if __name__ == "__main__":
 #     main()
 # main driver
 if __name__ == "__main__":
-    youtube_comments('https://www.youtube.com/watch?v=B7G5B8P8k9s')
+    youtube_comments('https://www.youtube.com/watch?v=7rTLkHZAYuk')
     # Y.get_subscriber_count()
     # Y.get_channel_videos()
     # Y.save_desc()
