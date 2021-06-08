@@ -6,6 +6,7 @@ from safe_dot_env.download_process.extract_text import *
 from test_text_classifier.test import *
 from googleapiclient.discovery import build
 from safe_dot_env.download_process.youtube_commnets import *
+from safe_dot_env.download_process.pop_ups import *
 api_key = 'AIzaSyDnaMpaPAvgJfhbrTszGlA2tE8fVAKBN8c'
 # youtube = build('youtube', 'v3', developerkey=api_key)
 # ----- URL as user input
@@ -120,8 +121,9 @@ def run():
 # run()
 
 
-def search():
-    url = input("Enter URL ")
+def search(url_input):
+    # url = input("Enter URL ")
+    url = url_input
     myVideo = YouTube(url)
     print("********************** Title **********************\n")
     print("Video Title: ", myVideo.title)
@@ -136,8 +138,37 @@ def search():
     print("********************** views **********************\n")
     print("Video views : ", myVideo.views)
     print("********************** Video resolution **********************\n")
-    comments_list = youtube_comments(url)
+    
     # print("comments_list:joy::joy::joy::joy::joy::joy::joy::joy:" ,comments_list )
+    
+    res = []
+    for stream in myVideo.streams.filter(progressive=True):
+        res.append(stream.resolution)
+        # print("Video resolutions : ",stream.resolution)
+    
+    return {"url" : url , "resolution" : res, 'my_video': myVideo}
+# search() ### Stopped by Ashour
+
+
+def sub_extract(url_input, resolution):
+    vid = search(url_input)
+    url = url_input
+    res = resolution
+    title = re.sub(
+                r'[W|\s|?|#|:|!|@|#|$|\'|%|^|&|*|+|=|\|/|*]', '_', vid['my_video'].title)
+    
+    
+    subtitle_list = download_method({"url" : url , "resolution" : res })
+    print("\n\n***********************subtitle_list***********************")
+
+    print(subtitle_list)
+    classifier_result_vid = text_classifier(subtitle_list)
+    print(f"percentage of profanity {classifier_result_vid['text_predict']}")
+    print(f"number of bad words {classifier_result_vid['bad_words']}")
+    comments_list = youtube_comments(url_input)
+
+    
+
     try:
         comments_results = comments_test(comments_list)
         good_result = format(comments_results['good_comments'], ".2f")
@@ -150,16 +181,9 @@ def search():
         print(f"number of bad words{classifier_result['bad_words']}")
     except:
         print(comments_list)
-    res = []
-    for stream in myVideo.streams.filter(progressive=True):
-        res.append(stream.resolution)
-        # print("Video resolutions : ",stream.resolution)
-    subtitle_list = download_method({"url" : url , "resolution" : res[0] })
-    print("\n\n***********************subtitle_list***********************")
-
-    print(subtitle_list)
-    classifier_result_vid = text_classifier(subtitle_list)
-    print(f"percentage of profanity {classifier_result_vid['text_predict']}")
-    print(f"number of bad words {classifier_result_vid['bad_words']}")
-    return {"url" : url , "resolution" : res[0] }
-search()
+    
+    if classifier_result_vid['text_predict'] > 0.5:
+        pop_up_unsafe(title)
+    else:
+        pop_up_safe()
+    
