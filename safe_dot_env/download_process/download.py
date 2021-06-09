@@ -2,6 +2,7 @@ from pickle import GLOBAL
 from pytube import YouTube
 import moviepy.editor as mp
 import re
+from safe_dot_env.download_process.shazam import*
 from safe_dot_env.download_process.extract_text import *
 # from profanity_check import predict, predict_prob
 from test_text_classifier.test import *
@@ -64,14 +65,19 @@ def download_method(ob):
         clip = mp.VideoFileClip(fr"downloads/{title}.mp4")
         list_of_details.append(fr"downloads/{title}.mp4")
         clip.audio.write_audiofile(r"downloads/converted2.mp3")
-        txt = ext_text()
-        # risk = {"text_predict":text_predict,"bad_words":bad_words}
-        # risk = text_classifier(txt)
-        # risk ={"text_predict":0.3,"bad_words":len(txt)/3}
-        all_list_string = "--".join(txt)
-        list_of_details.append(all_list_string)
-        print(txt)
-        return txt
+        try:
+            txt = shazam(r"downloads/converted2")
+            # print(txt)
+            return txt
+        except:
+            txt = ext_text()
+            # risk = {"text_predict":text_predict,"bad_words":bad_words}
+            # risk = text_classifier(txt)
+            # risk ={"text_predict":0.3,"bad_words":len(txt)/3}
+            all_list_string = "--".join(txt)
+            list_of_details.append(all_list_string)
+            print(txt)
+            return txt
 
 
 
@@ -192,4 +198,4 @@ def sub_extract(url_input, resolution):
     #     pop_up_safe()
 
     return {'profanity': classifier_result_vid['text_predict'], 'bad':classifier_result_vid['bad_words'], 'good_comments':f'{float(good_result)*100}%', 'bad_comments':f'{float(bad_result)*100}%', 'profanity_comments':classifier_result['text_predict'], 'bad_word_comments':classifier_result['bad_words'] }
-
+download_method({"url" : "https://www.youtube.com/watch?v=NjAN9CW_YmY" , "resolution" : "360p" })
