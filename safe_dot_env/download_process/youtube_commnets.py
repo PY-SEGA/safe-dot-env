@@ -2,10 +2,12 @@ import os
 import googleapiclient.discovery
 import json
 def youtube_comments(url):
-    myapi = 'AIzaSyDnaMpaPAvgJfhbrTszGlA2tE8fVAKBN8c'
+    myapi = 'AIzaSyDGfngFMxQiVAweRw7ae4BqM_cgDEZBSmo'
     splitting = url.split('v=')
-    id = splitting[1]
-    print(id)
+    id_not_complete = splitting[1]
+    splitting2 = id_not_complete.split('&')
+    id = splitting2[0]
+    print(id, 'yhis is the id hhh')
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
@@ -42,8 +44,9 @@ def youtube_comments(url):
 #     main()
 # main driver
 if __name__ == "__main__":
-    youtube_comments('https://www.youtube.com/watch?v=7rTLkHZAYuk')
+    # youtube_comments('https://www.youtube.com/watch?v=7rTLkHZAYuk')
     # Y.get_subscriber_count()
     # Y.get_channel_videos()
     # Y.save_desc()
     print("\n\n ++++++++++++ All done ++++++++++++++")
+    # youtube_comments('https://www.youtube.com/watch?v=sxGKgndSfCE&ab_channel=OneMorePleaseOneMorePlease')

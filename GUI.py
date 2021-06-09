@@ -28,7 +28,7 @@ heading_font = Font(
 )
 
 info_font = Font(
-    size =22,
+    size =15,
     underline=0,
     overstrike=0
 )
@@ -238,10 +238,45 @@ def show_result_frame(root_window, *args, **kwargs):
     
     
     def thread_download(url, res):
+        global stat
         if resolution_dropdown.get():
-            sub_extract(url, resolution_dropdown.get())
+            stat = call_res(url, resolution_dropdown.get())
         else:
-            sub_extract(url, res[0])
+            stat =call_res(url, res[0])
+        prof_frame = Frame(root_window, bg='#2b2929')
+        prof_frame.grid(row=7, column=1)
+
+        prof_word_label = Label(download_frame, text=textwrap.fill(
+            'Percentage of profanity', width=10), pady=30, bg='#2b2929', fg='white', font=info_font).grid(row=1, column=0)
+        prof_word = Label(download_frame, bg='#2b2929', fg='white',
+                        font=20, text=stat['profanity']).grid(row=1, column=1)
+        # prof_word = Label(download_frame, bg='#2b2929', fg='white',
+        #                 font=20, text='50%').grid(row=1, column=1)
+
+        bad_word_label = Label(download_frame, text=textwrap.fill('Percentage of bad words',width=10),
+                            bg='#2b2929', fg='white', font=info_font, pady=30).grid(row=2, column=0)
+        bad_word = Label(download_frame, bg='#2b2929', fg='white',
+                        font=20, text=stat['bad']).grid(row=2, column=1)
+        # bad_word = Label(download_frame, bg='#2b2929', fg='white',
+        #                 font=20, text='50%').grid(row=2, column=1)
+
+        good_comments_label = Label(download_frame, text=textwrap.fill('Percentage of good comments',width=10), bg='#2b2929', fg='white', font=info_font, pady=30).grid(row=3, column=0)
+        good_comments = Label(download_frame, bg='#2b2929', fg='white',
+                            font=20, text=stat['good_comments']).grid(row=3, column=1)
+
+        bad_comments_label = Label(download_frame, text=textwrap.fill('Percentage of bad comments',width=10), bg='#2b2929', fg='white', font=info_font, pady=30).grid(row=4, column=0)
+        bad_comments = Label(download_frame, bg='#2b2929', fg='white',
+                            font=20, text=stat['bad_comments']).grid(row=4, column=1)
+
+        prof_comments_label = Label(download_frame, text=textwrap.fill('Percentage of profanity in comments',width=10),
+                                    bg='#2b2929', fg='white', font=info_font, pady=30).grid(row=5, column=0)
+        prof_comments = Label(download_frame, bg='#2b2929', fg='white',
+                            font=20, text=stat['profanity_comments']).grid(row=5, column=1)
+
+        bad_word_comments_label = Label(download_frame, text=textwrap.fill('Percentage of bad words in comments',width=10),
+                                        bg='#2b2929', fg='white', font=info_font, pady=30).grid(row=6, column=0)
+        bad_word_comments = Label(download_frame, bg='#2b2929', fg='white',
+                                font=20, text=stat['bad_word_comments']).grid(row=6, column=1)
 
 
 def search_video():
@@ -251,10 +286,11 @@ def search_video():
     video_url = url_entry.get()
     vid = search(video_url)
     resolution = vid['resolution']
+    print(vid)
     if video_url:
         # Creating the Frame from the available data to download the video
         show_result_frame(root_window=second_frame,
-                          thumbnail_url = vid['my_video'].thumbnail_url,
+                          thumbnail_url = vid["my_video"].thumbnail_url,
                           resolution_options = resolution,
                           title = vid['my_video'].title,
                           search_button=search_button,
@@ -293,7 +329,9 @@ my_canvas.bind_all("<MouseWheel>", _on_mouse_wheel)
 second_frame = Frame(my_canvas, bg='#2b2929')
 my_canvas.create_window((0,0), window=second_frame, anchor='nw')
 
-
+def refresh():
+    root.destroy()
+    root.mainloop()
 
 frame1 = Frame(second_frame, bg='#2b2928')
 frame1.grid(row=0,column=0 , columnspan=3, pady=(50,50), padx=(100,0))
