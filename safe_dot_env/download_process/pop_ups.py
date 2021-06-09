@@ -11,6 +11,7 @@ import requests
 from io import BytesIO
 import textwrap
 from safe_dot_env.download_process.download import *
+# from safe_dot_env.download_process.download import insert_to_db
 from safe_dot_env.download_process.root import root
 
 alert_font = Font(
@@ -42,17 +43,20 @@ def pop_up():
 def cancel_download(title):
     import os
     os.remove(f'downloads/{title}.mp4')
+    pop2.destroy()
+
+    insert_to_db()
+
 
 def continue_download():
     pop2.destroy()
     download_complete()
 
+    insert_to_db()
+
 
 def pop_up_unsafe(title):
     '''This function is for the unsafe content warning'''
-
-    
-
     global pop2
     pop2 = Toplevel(root)
     pop2.overrideredirect(0.2)
@@ -93,7 +97,7 @@ def pop_up_safe():
     # err_pic = Label(pop4, image=err,borderwidth=0, bg='yellow')
     # err_pic.pack(pady=10)
 
-    pop4_label = Label(pop4, text='Download complete\n  your video is safe',bg='#2b2929', fg='white', font=alert_font)
+    pop4_label = Label(pop4, text='Download complete\n  your video is safe',bg='#2b2929', fg='white', font=15)
     pop4_label.pack(pady=10)
 
     k = Button(pop4, text='OK', command=pop4.destroy, bg='grey')
