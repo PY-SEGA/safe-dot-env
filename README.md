@@ -6,6 +6,13 @@
 - **Mohammad Ashour**
 - **Rawan Abu-Yasein**
 
+## Getting Started :
+to get started with the project :
+1- clone the repository ```git clone https://github.com/PY-SEGA/safe-dot-env.git ```
+2- redirect to the folder ``` cd safe-dot-env ``` 
+3- install the dependincies ```poetry install ```
+4- install ffmpeg ```sudo apt install ffmpeg```
+5- run the application as python module ``` python -m GUI.py``` 
 
 ------------------------------------------------------------------------------------------------
 ## **Conflict Plan**
